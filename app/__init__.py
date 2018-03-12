@@ -15,11 +15,6 @@ client  = Orion.Client("130.206.113.226")
 
 app = Flask(__name__ )
 
-app_settings = os.getenv(
-    'APP_SETTINGS',
-    'app.config.DevelopmentConfig'
-)
-app.config.from_object(app_settings)
 
 @app.route('/')
 def index():
