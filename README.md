@@ -6,7 +6,7 @@
  
 ```
 
-### Run Flask
+### Run with Flask
 
 ```
   Windows
@@ -20,13 +20,13 @@
   flask run
 ```
 
-### Run python
+### Run with python
 
 ```
   python run.py
 ```
 
-### Run gunicorn 
+### Run with gunicorn 
 
 ```
   gunicorn app:app
