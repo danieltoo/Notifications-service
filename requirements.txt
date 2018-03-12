@@ -1,0 +1,6 @@
+
+Babel==2.1.1
+Flask==0.12.2
+keystoneauth1==3.4.0
+-e git+https://github.com/ging/python-keystoneclient.git@9031143828d2d935eadb1be3fc2deb9f94f56a02#egg=python_keystoneclient
+
