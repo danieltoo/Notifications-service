@@ -45,7 +45,7 @@ Response
 
 ```json
   {
-    'token': '&lt;token&gt;'
+    'token': '<token>'
   }
 ```
 
