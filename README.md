@@ -41,7 +41,7 @@
     'password' : 'password'
   }
 ```
-Response  
+Response  200
 
 ```json
   {
