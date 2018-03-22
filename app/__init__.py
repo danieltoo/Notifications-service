@@ -25,7 +25,7 @@ def login():
     if not request.json:
         abort(400)
     token  = keyrock.login(request.json['email'], request.json['password'] )
-    return json.dumps({"token" : token}), 200
+    return jsonify({"token" : token}), 200
 
 @app.route('/user/<email>') #Obtiene datos del usuario con el otro servicio
 def getUser(email):
