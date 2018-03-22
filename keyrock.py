@@ -11,8 +11,8 @@ idm = {
     "id_admin" : "idm_user",
     "password" : "idm",
     "idm_project": "idm_project",
-    "idm_host" : "localhost:35357"
-    #"idm_host" : "207.249.127.96:35357"
+    #"idm_host" : "localhost:35357"
+    "idm_host" : "207.249.127.96:35357"
 }
 
 
