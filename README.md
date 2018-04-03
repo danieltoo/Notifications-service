@@ -1,4 +1,4 @@
-# DrivingApp-Service-Python
+# SmartSecurity-Notifications
 
 ### Install requirements 
 ```
