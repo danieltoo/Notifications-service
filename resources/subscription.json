@@ -1,0 +1,51 @@
+{
+    "description": "Alert subscription",
+    "subject": {
+      "entities": [
+        {
+          "idPattern": ".*",
+          "type": "Alert" 
+        }
+      ],
+      "condition": {
+        "attrs": [
+          "id",
+          "type",
+          "category",
+          "subCategory",
+          "location",
+          "address",
+          "dateObserved",
+          "validFrom",
+          "validTo",
+          "description",
+          "alertSource",
+          "data",
+          "severity"
+        ]
+      }
+    },
+    "notification": {
+      "http": {
+        "url": "http://10.0.0.7:8001/notify"
+      },
+      "attrs": [
+        "id",
+        "type",
+        "category",
+        "subCategory",
+        "location",
+        "address",
+        "dateObserved",
+        "validFrom",
+        "validTo",
+        "description",
+        "alertSource",
+        "data",
+        "severity"
+      ],
+      "attrsFormat":"keyValues"
+    },
+    "expires": "2040-01-01T14:00:00.00Z",
+    "throttling": 5
+  }

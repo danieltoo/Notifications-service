@@ -1,0 +1,40 @@
+{
+    "id": "Alert:Device_Smartphone_40bbcd9c6dae670:1514s90080",
+    "type": "Alert",
+    "alertSource": {
+        "type": "Text",
+        "value": "Device_Smartphone_40bbcd9c6cae67c0"
+    },
+    "category": {
+        "type": "Text",
+        "value": "traffic"
+    },
+    "dateObserved": {
+        "type": "DateTime",
+        "value": "2018-02-12T18:10:33.00Z"
+    },
+    "description": {
+        "type": "Text",
+        "value": "Alertas de prueba de velocidad"
+    },
+    "location": {
+        "type": "geo:point",
+        "value": "18.87982317 ,-99.22156606"
+    },
+    "severity": {
+        "type": "Text",
+        "value": "high"
+    },
+    "subCategory": {
+        "type": "Text",
+        "value": "UnauthorizedSpeedDetection"
+    },
+    "validFrom": {
+        "type": "DateTime",
+        "value": "2018-02-12T18:10:33.00Z"
+    },
+    "validTo": {
+        "type": "DateTime",
+        "value": "2018-02-12T18:11:28.00Z"
+    }
+}

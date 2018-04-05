@@ -1,4 +1,4 @@
-# SmartSecurity-Notifications
+# DrivingApp-Service-Python
 
 ### Install requirements 
 ```
@@ -41,11 +41,11 @@
     'password' : 'password'
   }
 ```
-Response  200
+Response  
 
 ```json
   {
-    'token': '<token>'
+    'token': '&lt;token&gt;'
   }
 ```
 

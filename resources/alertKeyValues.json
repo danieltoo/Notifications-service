@@ -1,0 +1,13 @@
+{
+    "id": "Alert:Device_Smartphone_7a85d9df7209b8bc:1519086635021",
+    "type": "Alert",
+    "alertSource": "Device_Smartphone_7a85d9df7209b8bc",
+    "category": "Traffic",
+    "dateObserved": "2018-02-20T00:30:35.00Z",
+    "description": "prueba dani",
+    "location": "18.81186166666667 ,-98.96342000000001",
+    "severity": "medium",
+    "subCategory": "Car Accident",
+    "validFrom": "2018-02-20T00:30:35.00Z",
+    "validTo": "2018-02-20T00:30:35.00Z"
+}
