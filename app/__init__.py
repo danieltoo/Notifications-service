@@ -15,18 +15,14 @@ def notify():
     inzone = functions.determinateZone(alert["location"]) #Determinar el campus en el que se encuentra
     if (inzone != {} ):
         print (inzone["idZone"])
-        devicesOnZone = functions.getDevicesOnZone("Zone_1522797798943") #Determinar lista de dispositivos en el campus
-        devicesNear = functions.getDevicesNear(alert["location"]) # Determina dispositivos cercanos
-        devices = devicesOnZone + devicesNear 
+        allTokens = functions.getTokens() # Obtiene todos los tokens de dispositivos
+        devicesOnZone = functions.getDevicesOnZone("Zone_1522797798943", allTokens) #Determinar lista de tokens de dispositivos en el campus
+        devicesNear = functions.getDevicesNear(alert["location"] ,allTokens) # Determina tokens de dispositivos cercanos
+        tokens, devices = functions.clearTokens(devicesNear, devicesOnZone) # revisa tokens repetidos
         if (len(devices) > 0):
-            tokens = functions.getTokens() # Obtiene todos los tokens de dispositivos
-            devList , tokensDevices = functions.matchTokens(devices, tokens) # Relaciona tokens con dispostivos
-            if (len(tokensDevices) > 0):
-                functions.sendNotifications(alert, tokensDevices, devList) # Envía notificacionesa dispositivos
-            else : 
-                print("No se encontraron tokens de dispositivos que coicidan")
+            functions.sendNotifications(alert, tokens, devices) # Envía notificacionesa dispositivos
         else :
-            print("No se encontraron dispositivos en el campus")
+            print("No se encontraron dispositivos en el campus o cercanos a la alerta")
     else :
         print("La alerta se generó fuera de un campus")
     return jsonify("OK"),201

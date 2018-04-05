@@ -2,6 +2,8 @@ import requests
 import config
 import json
 
+
+
 def pointOnZone(x, y, polygon):
     i = 0
     j = len(polygon) - 1
@@ -12,6 +14,33 @@ def pointOnZone(x, y, polygon):
                 salida = not salida
         j = i
     return salida  
+
+def matchTokens (devicesList, tokenDevices , preference = None):
+    tokens  = []
+    for dev in devicesList :
+        for token in tokenDevices:
+            if(token["refDevice"] == dev["id"]):
+                if preference != None : 
+                    if token["preferences"] == preference:
+                        tokens.append(token)   
+                else : 
+                    tokens.append(token) 
+    return tokens
+
+def clearTokens(near, onZone):
+    temp = {}
+    for devNear in near :
+        temp[devNear ["refDevice"]] = devNear["fcmToken"]
+    for devZone in onZone : 
+        temp[devZone ["refDevice"]] = devZone["fcmToken"]
+    array = []
+    devices = []
+    for device in temp :
+        array.append(temp[device])
+        devices.append(device)
+    return array, devices
+
+
 
 def determinateZone (location):
     zones = requests.get("http://{}/api/zone".format(config.smart))
@@ -24,7 +53,8 @@ def determinateZone (location):
             print ("Alerta sucitada en ", zone["name"])
     return inzone
 
-def getDevicesNear(location):
+
+def getDevicesNear(location, allTokens):
     body = {
         "id" : "Device_Smartphone_.*",
 		"type" : "Device",
@@ -33,47 +63,35 @@ def getDevicesNear(location):
         "coords" : location
     }
     entities = requests.post("http://{}/service/query".format(config.smart),data=body)
-    return  entities.json()
+    return matchTokens(entities.json() , allTokens)
 
-
-def getDevicesOnZone(idZone) :
+def getDevicesOnZone(idZone , allTokens) :
     devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart,idZone))
-    return devicesList.json()
+    return matchTokens(devicesList.json() , allTokens, "All")
 
 def getTokens() :
     tokenDevices = requests.get("http://{}/api/device/token".format(config.smart))
     return tokenDevices.json()
 
-def matchTokens (devicesList, tokenDevices):
-    tokens  = []
-    devices = []
-    for dev in devicesList :
-        for token in tokenDevices:
-            if(token["refDevice"] == dev["id"]):
-                tokens.append(token["fcmToken"])   
-                devices.append(dev["id"])
-    return devices ,tokens
 
-def sendNotifications(alert , tokens, devList):
+def sendNotifications(alert , tokens, devices):
     body = {
         "notification": {
             "title": alert["category"],
             "body": alert["description"]
         }
     }
-    
     headers = {
         "Content-Type":"application/json",
         "Authorization":'key=' + config.fcm
     }
     print(headers)
-    index =  0
+    index = 0 
     for token in tokens :
         body["to"] = token
         res = requests.post("http://fcm.googleapis.com/fcm/send",data=json.dumps(body),headers=headers)
-        print (res, devList[index])
+        print (res, devices[index])
         index += 1
-    
     print ("Sending Notifications")
     return
 
