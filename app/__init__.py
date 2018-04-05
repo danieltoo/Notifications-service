@@ -16,7 +16,7 @@ def notify():
     if (inzone != {} ):
         print (inzone["idZone"])
         devicesOnZone = functions.getDevicesOnZone("Zone_1522797798943") #Determinar lista de dispositivos en el campus
-        devicesNear = functions.getDevicesNear(alert["location"])
+        devicesNear = functions.getDevicesNear(alert["location"]) # Determina dispositivos cercanos
         devices = devicesOnZone + devicesNear 
         if (len(devices) > 0):
             tokens = functions.getTokens() # Obtiene todos los tokens de dispositivos
