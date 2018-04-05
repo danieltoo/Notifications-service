@@ -15,12 +15,14 @@ def notify():
     inzone = functions.determinateZone(alert["location"]) #Determinar el campus en el que se encuentra
     if (inzone != {} ):
         print (inzone["idZone"])
-        devices = functions.getDevices("Zone_1522797798943") #Determinar lista de dispositivos en el campus
+        devicesOnZone = functions.getDevicesOnZone("Zone_1522797798943") #Determinar lista de dispositivos en el campus
+        devicesNear = functions.getDevicesNear(alert["location"])
+        devices = devicesOnZone + devicesNear 
         if (len(devices) > 0):
             tokens = functions.getTokens() # Obtiene todos los tokens de dispositivos
-            tokensDevices = functions.matchTokens(devices, tokens ) # Relaciona tokens con dispostivos
+            devList , tokensDevices = functions.matchTokens(devices, tokens) # Relaciona tokens con dispostivos
             if (len(tokensDevices) > 0):
-                functions.sendNotifications(alert,tokensDevices) # Envía notificacionesa dispositivos
+                functions.sendNotifications(alert, tokensDevices, devList) # Envía notificacionesa dispositivos
             else : 
                 print("No se encontraron tokens de dispositivos que coicidan")
         else :

@@ -1,15 +1,14 @@
-
 import requests
 import config
 import json
 
-def pointOnZone(x, y, poligono):
+def pointOnZone(x, y, polygon):
     i = 0
-    j = len(poligono) - 1
+    j = len(polygon) - 1
     salida = False
-    for i in range(len(poligono)):
-        if (poligono[i][1] < y and poligono[j][1] >= y) or (poligono[j][1] < y and poligono[i][1] >= y):
-            if poligono[i][0] + (y - poligono[i][1]) / (poligono[j][1] - poligono[i][1]) * (poligono[j][0] - poligono[i][0]) < x:
+    for i in range(len(polygon)):
+        if (polygon[i][1] < y and polygon[j][1] >= y) or (polygon[j][1] < y and polygon[i][1] >= y):
+            if polygon[i][0] + (y - polygon[i][1]) / (polygon[j][1] - polygon[i][1]) * (polygon[j][0] - polygon[i][0]) < x:
                 salida = not salida
         j = i
     return salida  
@@ -25,7 +24,19 @@ def determinateZone (location):
             print ("Alerta sucitada en ", zone["name"])
     return inzone
 
-def getDevices(idZone) :
+def getDevicesNear(location):
+    body = {
+        "id" : "Device_Smartphone_.*",
+		"type" : "Device",
+        "georel" : "near;maxDistance:1000",
+        "geometry" : "point",
+        "coords" : location
+    }
+    entities = requests.post("http://{}/service/query".format(config.smart),data=body)
+    return  entities.json()
+
+
+def getDevicesOnZone(idZone) :
     devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart,idZone))
     return devicesList.json()
 
@@ -34,14 +45,16 @@ def getTokens() :
     return tokenDevices.json()
 
 def matchTokens (devicesList, tokenDevices):
-    devices  = []
+    tokens  = []
+    devices = []
     for dev in devicesList :
         for token in tokenDevices:
             if(token["refDevice"] == dev["id"]):
-                devices.append(token["fcmToken"])   
-    return devices
+                tokens.append(token["fcmToken"])   
+                devices.append(dev["id"])
+    return devices ,tokens
 
-def sendNotifications(alert , tokens):
+def sendNotifications(alert , tokens, devList):
     body = {
         "notification": {
             "title": alert["category"],
@@ -54,12 +67,14 @@ def sendNotifications(alert , tokens):
         "Authorization":'key=' + config.fcm
     }
     print(headers)
-	
+    index =  0
     for token in tokens :
         body["to"] = token
-        print(body)
         res = requests.post("http://fcm.googleapis.com/fcm/send",data=json.dumps(body),headers=headers)
-        print (res)
+        print (res, devList[index])
+        index += 1
     
     print ("Sending Notifications")
     return
+
+
