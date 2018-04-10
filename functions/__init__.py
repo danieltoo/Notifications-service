@@ -41,8 +41,6 @@ def clearTokens(near, onZone):
         devices.append(device)
     return array, devices
 
-
-
 def determinateZone (location):
     zones = requests.get("http://{}/api/zone".format(config.smart))
     inzone = {}
