@@ -48,7 +48,7 @@ def determinateZone (location):
     for zone in zones.json():  
         loc = location.split(',')
         point = pointOnZone (float(loc[0]), float(loc[1]), zone["location"] )
-        if (point) :
+        if (point) : 
             inzone = zone
             print ("Alerta sucitada en ", zone["name"])
     return inzone
