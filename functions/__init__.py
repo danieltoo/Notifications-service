@@ -25,6 +25,7 @@ def matchTokens (devicesList, tokenDevices , preference = None):
                         tokens.append(token)   
                 else : 
                     tokens.append(token) 
+    
     return tokens
 
 def clearTokens(near, onZone):
@@ -67,6 +68,7 @@ def getDevicesNear(location, allTokens):
 
 def getDevicesOnZone(idZone , allTokens) :
     devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart,idZone))
+    print ("http://{}/service/devices/zone/{}".format(config.smart,idZone))
     return matchTokens(devicesList.json() , allTokens, "All")
 
 def getTokens() :

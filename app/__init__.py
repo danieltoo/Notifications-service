@@ -16,7 +16,7 @@ def notify():
     if (inzone != {} ):
         print (inzone["idZone"])
         allTokens = functions.getTokens() # Obtiene todos los tokens de dispositivos
-        devicesOnZone = functions.getDevicesOnZone("Zone_1522797798943", allTokens) #Determinar lista de tokens de dispositivos en el campus
+        devicesOnZone = functions.getDevicesOnZone(inzone["idZone"], allTokens) #Determinar lista de tokens de dispositivos en el campus        
         devicesNear = functions.getDevicesNear(alert["location"] ,allTokens) # Determina tokens de dispositivos cercanos
         tokens, devices = functions.clearTokens(devicesNear, devicesOnZone) # revisa tokens repetidos
         if (len(devices) > 0):
