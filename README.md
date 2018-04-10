@@ -1,4 +1,10 @@
-# DrivingApp-Service-Python
+# Smart Security Notifications Module
+
+### Clone this repo
+```
+  git clone https://github.com/cenidetiot/SmartSecurity-Notifications.git
+ 
+```
 
 ### Install requirements 
 ```
