@@ -6,7 +6,8 @@ import functions
 app = Flask(__name__)
 @app.route('/')
 def index():
-    return render_template('./index.html', name = "Your project name")  
+    #return render_template('./index.html', name = "Your project name") 
+    return jsonify( {"message" : "SmartSecurity Notifications is running"} ),200
 
 @app.route('/notify', methods=['POST'])
 def notify():
