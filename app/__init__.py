@@ -13,6 +13,7 @@ def index():
 def notify(): 
     print ("Alerta Recibida")
     alert = request.json["data"][0]  # Extraer datos de la alerta
+    print (alert)
     inzone = functions.determinateZone(alert["location"]) #Determinar el campus en el que se encuentra
     if (inzone != {} ): 
         print (inzone["idZone"])
