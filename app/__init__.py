@@ -10,11 +10,11 @@ def index():
     return jsonify( {"message" : "SmartSecurity Notifications is running"} ),200
 
 @app.route('/notify', methods=['POST'])
-def notify():
+def notify(): 
     print ("Alerta Recibida")
     alert = request.json["data"][0]  # Extraer datos de la alerta
     inzone = functions.determinateZone(alert["location"]) #Determinar el campus en el que se encuentra
-    if (inzone != {} ):
+    if (inzone != {} ): 
         print (inzone["idZone"])
         allTokens = functions.getTokens() # Obtiene todos los tokens de dispositivos
         devicesOnZone = functions.getDevicesOnZone(inzone["idZone"], allTokens) #Determinar lista de tokens de dispositivos en el campus        
