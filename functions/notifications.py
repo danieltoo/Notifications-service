@@ -8,7 +8,7 @@ def sendNotifications(alert , tokens, devices):
             "title": alert["subCategory"],
             "body": alert["description"]
         },
-        data: {
+        "data": {
            "location" : alert["location"]
         }
     }
