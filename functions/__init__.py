@@ -53,6 +53,7 @@ def clearTokens(near, onZone):
         array.append(temp[device])
         devices.append(device)
     return array, devices
+    
 def distance(start, end):
     rlat0 = math.radians(start[0])
     rlng0 = math.radians(start[1])
