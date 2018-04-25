@@ -15,7 +15,7 @@ def pointOnZone(x, y, polygon):
     return salida  
 
 def determinateZone (location):
-    zones = requests.get("http://{}/api/zone".format(config.smart))
+    zones = requests.get("http://{}/api/zone?status=1".format(config.smart))
     inzone = {}
     for zone in zones.json():  
         loc = location.split(',')
