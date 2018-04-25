@@ -110,8 +110,7 @@ def sendNotifications(alert , tokens, devices):
             "body": alert["description"]
         },
         "data": {
-           "location" : alert["location"],
-           "severity" : alert["severity"]
+           "alert" : alert
         }
     }
     headers = {
