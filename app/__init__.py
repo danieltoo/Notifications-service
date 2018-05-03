@@ -31,7 +31,7 @@ def notify():
         print (devices)
         if (len(devices) > 0):
             print("OK")
-            #noti.sendNotifications(alert, tokens, devices) # Envía notificacionesa dispositivos
+            noti.sendNotifications(alert, tokens, devices) # Envía notificacionesa dispositivos
         else :
             print("No se encontraron dispositivos en el campus o cercanos a la alerta")
     else :
