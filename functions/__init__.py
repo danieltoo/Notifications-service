@@ -69,7 +69,7 @@ def distance(start, end):
     )
     return distance 
 
-def inRoad (start, end, point, width):
+def inSegment (start, end, point, width):
     width = width / 2
     area  = (distance(start, end) * width) / 2
     a = distance (start, point)
@@ -83,6 +83,14 @@ def inRoad (start, end, point, width):
         return True 
     else: 
         return False
+
+def inRoad (polyline, point, width) :
+    isOnRoad = False
+    for i in range(len(polyline)):
+        if inSegment(polyline[i][0], polyline[i][1], point,width):
+            isOnRoad = True
+    
+    return isOnRoad
 
 def getDevicesNear(location, allTokens):
     body = {
@@ -99,9 +107,6 @@ def getDevicesOnZone(idZone , allTokens) :
     devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart,idZone))
     print ("http://{}/service/devices/zone/{}".format(config.smart,idZone))
     return matchTokens(devicesList.json() , allTokens, "All")
-
-
-
 
 def sendNotifications(alert , tokens, devices):
     body = {
