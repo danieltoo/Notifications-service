@@ -42,7 +42,7 @@ class Notifications (object) :
             "notification": {
                 "title": alert["subCategory"],
                 "body": alert["description"],
-                "color": '#6563A4'
+                "color": '#9b59b6'
             },
             "data": {
             "alert" : alert
