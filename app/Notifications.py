@@ -41,7 +41,8 @@ class Notifications (object) :
         body = {
             "notification": {
                 "title": alert["subCategory"],
-                "body": alert["description"]
+                "body": alert["description"],
+                "color": '#6563A4'
             },
             "data": {
             "alert" : alert
