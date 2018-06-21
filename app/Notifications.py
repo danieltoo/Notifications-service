@@ -40,8 +40,8 @@ class Notifications (object) :
     def sendNotifications(self, alert , tokens, devices):
         body = {
             "notification": {
-                "title": alert["subCategory"],
-                "body": alert["description"],
+                "title": alert["category"],
+                "body": alert["subCategory"],
                 "color": '#9b59b6'
             },
             "data": {
