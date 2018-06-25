@@ -32,7 +32,17 @@ class SmartClient (object):
         devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart, zone))
         return devicesList.json()
 
-    def getTokens(self):
-        tokenDevices = requests.get("http://{}/api/device/token".format(config.smart))
-        return tokenDevices.json()
+    def getTokens(self, type = None):
+        tokenDevices = requests.get("http://{}/api/device/token".format(config.smart)).json()
+        tempTokens = []
+        if type != None:
+            for token in tokenDevices :
+                if token["preferences"] == type:
+                    tempTokens.append(token)
+                    print(token["idDeviceToken"])
+        else :
+            tempTokens = tokenDevices
+        return tempTokens
     
+    def createSuscription(self):
+        pass
