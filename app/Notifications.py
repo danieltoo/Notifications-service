@@ -4,26 +4,24 @@ import config
 
 class Notifications (object) : 
 
-    def matchTokens (self, devicesList, tokenDevices , preference = None):
+    def matchTokens (self, devicesList, tokenDevices):
         tokens  = []
         for dev in devicesList :
             for token in tokenDevices:
                 if(token["refDevice"] == dev["id"]):
-                    if preference != None : 
-                        if token["preferences"] == preference:
-                            tokens.append(token)   
-                    else : 
-                        tokens.append(token) 
+                    tokens.append(token) 
         return tokens
 
-    def clearTokens(self, near, onZone, allTokens):
+    def clearTokens(self, alertSource, near, onZone, allTokens):
         near = self.matchTokens(near, allTokens)
-        onZone = self.matchTokens(onZone, allTokens, "All")
+        onZone = self.matchTokens(onZone, allTokens)
+
         temp = {}
         print("DEVICES ON ZONE")
         for devNear in near :
             temp[devNear ["refDevice"]] = devNear["fcmToken"]
             print(devNear["refDevice"])
+
         print("DEVICES NEAR")
         for devZone in onZone : 
             temp[devZone ["refDevice"]] = devZone["fcmToken"]
@@ -32,26 +30,42 @@ class Notifications (object) :
         array = []
         devices = []
         for device in temp :
-            array.append(temp[device])
-            devices.append(device)
+            if (device != alertSource) :
+                array.append(temp[device])
+                devices.append(device)
 
         return array, devices
 
     def sendNotifications(self, alert , tokens, devices):
+        color = ""
+        if(alert["severity"] == "informational"):
+            color = "#3498db"
+        if(alert["severity"] == "low"):
+            color = "#2c3e50"
+        if(alert["severity"] == "medium"):
+            color = "#f1c40f"
+        if(alert["severity"] == "high"):
+            color = "#e67e22"
+        if(alert["severity"] == "critical"):
+            color = "#c0392b"
+
+        print (alert["severity"])
         body = {
             "notification": {
-                "title": alert["subCategory"],
-                "body": alert["description"]
+                "title": alert["category"],
+                "body": alert["subCategory"],
+                "color": color
             },
             "data": {
-            "alert" : alert
-            }
+                "alert" : alert
+            },
+            "ttl": 3600
         }
         headers = {
             "Content-Type":"application/json",
             "Authorization":'key=' + config.fcm
         }
-        print(headers)
+        print(tokens)
         index = 0 
         for token in tokens :
             body["to"] = token
