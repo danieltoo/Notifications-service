@@ -20,9 +20,9 @@ class SmartClient (object):
         body = {
             "id" : "Device_Smartphone_.*",
             "type" : "Device",
-            "georel" : "near;maxDistance:100",
-            "geometry" : "point",
-            "coords" : location
+            #"georel" : "near;maxDistance:100",
+            #"geometry" : "point",
+            #"coords" : location
         }
         entities = requests.post("http://{}/service/query".format(config.smart),data=body)
         return entities.json()
@@ -33,7 +33,7 @@ class SmartClient (object):
         return devicesList.json()
 
     def getTokens(self, type = None):
-        tokenDevices = requests.get("http://{}/api/device/token".format(config.smart)).json()
+        tokenDevices = requests.get("http://{}/api/device/token?status=1".format(config.smart)).json()
         tempTokens = []
         if type != None:
             for token in tokenDevices :
