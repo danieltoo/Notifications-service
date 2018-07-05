@@ -47,6 +47,8 @@ def notify():
         tokens = []
         devices = []
         devicesOnZone = client.getDevicesOnZone(inzone["idZone"]) #Determinar lista  de dispositivos en el campus        
+        print (devicesOnZone) 
+        
         if alert["alertSource"].find("Device_Smartphone_") != -1: #Determinar si la alerta es de Smartphone
             allTokens = client.getTokens()
             devicesNear = client.getDevicesNear(alert["location"]) # Determina tokens de dispositivos cercanos
@@ -57,6 +59,7 @@ def notify():
             noti.sendNotifications(alert, tokens, devices) # Envía notificacionesa dispositivos
         else :
             print("No se encontraron dispositivos en el campus o cercanos a la alerta")
+        
     else :
         print("La alerta se generó fuera de un campus")
     return jsonify("OK"),201

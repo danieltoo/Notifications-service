@@ -33,6 +33,7 @@ class Notifications (object) :
             if (device != alertSource) :
                 array.append(temp[device])
                 devices.append(device)
+                
 
         return array, devices
 
