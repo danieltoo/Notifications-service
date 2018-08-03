@@ -56,6 +56,7 @@ class Notifications (object) :
                 "title": alert["category"],
                 "body": alert["subCategory"],
                 "color": color
+
             },
             "data": {
                 "alert" : alert
