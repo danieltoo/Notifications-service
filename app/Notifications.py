@@ -8,6 +8,8 @@ class Notifications (object) :
         tokens  = []
         for dev in devicesList :
             for token in tokenDevices:
+                print(token)
+                print(dev)
                 if(token["refDevice"] == dev["id"]):
                     tokens.append(token) 
         return tokens
