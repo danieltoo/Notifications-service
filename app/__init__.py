@@ -36,7 +36,7 @@ def notify():
     print ("Alerta Recibida")
     alert = request.json["data"][0]  # Extraer datos de la alerta
     socketio.emit('alert:' + globalCode, alert, broadcast=True)  #Envía todas las alertas
-
+    print(alert)
     zones  = client.getZones()
     inzone = determinateZone(alert["location"], zones) #Determinar el campus en el que se encuentra
 
@@ -47,8 +47,7 @@ def notify():
         tokens = []
         devices = []
         devicesOnZone = client.getDevicesOnZone(inzone["idZone"]) #Determinar lista  de dispositivos en el campus        
-        print (devicesOnZone) 
-        
+
         if alert["alertSource"].find("Device_Smartphone_") != -1: #Determinar si la alerta es de Smartphone
             allTokens = client.getTokens()
             devicesNear = client.getDevicesNear(alert["location"]) # Determina tokens de dispositivos cercanos
