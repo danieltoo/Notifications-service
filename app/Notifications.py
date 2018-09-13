@@ -76,6 +76,6 @@ class Notifications (object) :
             body["to"] = token
             res = requests.post("http://fcm.googleapis.com/fcm/send",data=json.dumps(body),headers=headers)
             print (res, devices[index])
-            devices_notificated.push(devices[index])
+            devices_notificated.append(devices[index])
             index += 1
         return devices_notificated
