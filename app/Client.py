@@ -29,15 +29,15 @@ class SmartClient (object):
 
     def getDevicesOnZone(self, zone):
         print("http://{}/service/devices/zone/{}".format(config.smart, zone))
-        devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart, zone))
+        #devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart, zone))
         #Get all devices  
-        """body = {
+        body = {
             "id" : "Device_Smartphone_.*",
             "type" : "Device",
             "options" : "keyValues"
         }
         devicesList = requests.post("http://{}/service/query".format(config.smart),data=body)
-        """
+        
         return devicesList.json()
 
     def getTokens(self, type = None):
