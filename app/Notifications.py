@@ -8,8 +8,8 @@ class Notifications (object) :
         tokens  = []
         for dev in devicesList :
             for token in tokenDevices:
-                print(token)
-                print(dev)
+                #print(token)
+                #print(dev)
                 if(token["refDevice"] == dev["id"]):
                     tokens.append(token) 
         return tokens
@@ -22,12 +22,12 @@ class Notifications (object) :
         print("DEVICES ON ZONE")
         for devNear in near :
             temp[devNear ["refDevice"]] = devNear["fcmToken"]
-            print(devNear["refDevice"])
+            #print(devNear["refDevice"])
 
         print("DEVICES NEAR")
         for devZone in onZone : 
             temp[devZone ["refDevice"]] = devZone["fcmToken"]
-            print(devZone["refDevice"])
+            #print(devZone["refDevice"])
 
         array = []
         devices = []
@@ -69,13 +69,13 @@ class Notifications (object) :
             "Content-Type":"application/json",
             "Authorization":'key=' + config.fcm
         }
-        print(tokens)
+        #print(tokens)
         index = 0 
         devices_notificated  = []
         for token in tokens :
             body["to"] = token
             res = requests.post("http://fcm.googleapis.com/fcm/send",data=json.dumps(body),headers=headers)
-            print (res, devices[index])
+            #print (res, devices[index])
             devices_notificated.append(devices[index])
             index += 1
         return devices_notificated
