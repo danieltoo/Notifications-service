@@ -2,3 +2,5 @@
 context = "contexthost"
 smart = "smartsecurityservice"
 fcm = 'firebase admin key'
+username = 'username'
+password = "password"
