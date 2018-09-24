@@ -29,15 +29,15 @@ class SmartClient (object):
 
     def getDevicesOnZone(self, zone):
         print("http://{}/service/devices/zone/{}".format(config.smart, zone))
-        #devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart, zone))
+        devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart, zone))
         #Get all devices  
-        body = {
+        """body = {
             "id" : "Device_Smartphone_.*",
             "type" : "Device",
             "options" : "keyValues"
         }
         devicesList = requests.post("http://{}/service/query".format(config.smart),data=body)
-
+        """
         return devicesList.json()
 
     def getTokens(self, type = None):
@@ -53,3 +53,11 @@ class SmartClient (object):
     
     def createSuscription(self):
         pass
+    
+    def query(self, _json):
+        result = requests.post("http://{}/service/query".format(config.smart),data=json.dumps(_json))
+        return result
+
+    def getHistoryAlerts(self, idZone):
+        alerts = requests.get("http://{}/service/alerts/zone/history/{}?id=Alert:Device_Smartphone_.*&location=false".format(config.smart, idZone))
+        return alerts.json(), alerts.headers
