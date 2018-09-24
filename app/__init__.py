@@ -7,13 +7,19 @@ import crypt
 import random
 import datetime
 import config
+import json
 from app.Client import SmartClient
 from app.Functions import determinateZone
 from app.Notifications import Notifications
+from flask_cors import CORS
+from crate import client as crate
+
+connection = crate.connect("http://35.196.174.137:4200")
 
 client = SmartClient() 
 noti = Notifications()
 app = Flask(__name__,static_url_path='/static')
+CORS(app)
 socketio = SocketIO(app)
 
 globalCode = crypt.crypt(config.username, config.password)
@@ -63,10 +69,34 @@ def notify():
         print("La alerta se generó fuera de un campus")
     return jsonify("OK"),201
 
+@app.route('/alerts/count/zone', methods=['GET'])
+def alertsCountZone():
+    cursor = connection.cursor()
+    cursor.execute("select etbuilding.entity_id, etbuilding.owner , count(*)  as total from etalert, etbuilding where within(etalert.location, etbuilding.location) GROUP BY etbuilding.entity_id, etbuilding.owner")
+    result = cursor.fetchall()
+    return json.dumps(result), 200
 
 
+@app.route('/alerts/count/category', methods=['GET'])
+def alertsCountCategory():
+    cursor = connection.cursor()
+    cursor.execute("select count(*), etalert.category from etalert group by etalert.category")
+    result = cursor.fetchall()
+    return json.dumps(result), 200
 
+@app.route('/alerts/count/subcategory', methods=['GET'])
+def alertsCountSubategory():
+    cursor = connection.cursor()
+    cursor.execute("select count(*), etalert.subcategory from etalert group by etalert.subcategory")
+    result = cursor.fetchall()
+    return json.dumps(result), 200
 
+@app.route('/alerts/count/severity', methods=['GET'])
+def alertsCountSeverity():
+    cursor = connection.cursor()
+    cursor.execute("select count(*), etalert.severity from etalert group by etalert.severity")
+    result = cursor.fetchall()
+    return json.dumps(result), 200
 
     
 
