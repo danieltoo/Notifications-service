@@ -1,6 +1,6 @@
 
-context = "contexthost"
-smart = "smartsecurityservice"
-fcm = 'firebase admin key'
-username = 'username'
-password = "password"
+context = "ORION-HOST"
+smart = "SMARTSERVICE-HOST"
+fcm = 'FIREBASE-ADMIN-KEY'
+username = 'USERNAME'
+password = "PASSWORD"
