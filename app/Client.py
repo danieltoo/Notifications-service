@@ -6,6 +6,7 @@ class SmartClient (object):
 
     def getZones(self):
         zones = requests.get("http://{}/api/zone?status=1".format(config.smart))
+        print zones
         return zones.json()
 
     def getRoads(self, responsible): 
@@ -60,4 +61,5 @@ class SmartClient (object):
 
     def getHistoryAlerts(self, idZone):
         alerts = requests.get("http://{}/service/alerts/zone/history/{}?id=Alert:Device_Smartphone_.*&location=false".format(config.smart, idZone))
+        ##alerts = requests.get("http://{}/service/alerts/zone/history/{}".format(config.smart, idZone))        
         return alerts.json(), alerts.headers

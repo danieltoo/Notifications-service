@@ -74,8 +74,8 @@ def alertsCountZone():
     cursor = connection.cursor()
     cursor.execute("select etbuilding.entity_id, etbuilding.owner , count(*)  as total from etalert, etbuilding where within(etalert.location, etbuilding.location) GROUP BY etbuilding.entity_id, etbuilding.owner")
     result = cursor.fetchall()
+    jsonResult = {}
     return json.dumps(result), 200
-
 
 @app.route('/alerts/count/category', methods=['GET'])
 def alertsCountCategory():
@@ -96,9 +96,22 @@ def alertsCountSeverity():
     cursor = connection.cursor()
     cursor.execute("select count(*), etalert.severity from etalert group by etalert.severity")
     result = cursor.fetchall()
-    return json.dumps(result), 200
+    jsonResult = {}
+    for item in result:
+        jsonResult[item[1]] = item[0]
+    return json.dumps(jsonResult), 200
 
-    
+@app.route('/alerts/count/context/zone', methods=['GET'])
+def alertsCountContextZone():
+    zones  = client.getZones()
+    data = []
+    for zone in zones :
+        alerts, headers = client.getHistoryAlerts(zone["idZone"])
+        print headers['Fiware-Total-Count']
+        data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
+    return json.dumps(data), 200    
+
+
 
     
 
