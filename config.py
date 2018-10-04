@@ -8,7 +8,7 @@ password = "sm2"
 
 import os
 context=os.environ['CONTEXT']
-smart=os.environ['SMART_SERVICE']
+smart="http://"+ os.environ['SMART_SERVICE']+":4005"
 fcm=os.environ['FCM_SERVER_TOKEN']
 username=os.environ['USER_NAME']
 password=os.environ['PASSWORD']
