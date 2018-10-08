@@ -5,12 +5,7 @@ import config
 class SmartClient (object): 
 
     def getZones(self):
-<<<<<<< HEAD
-        zones = requests.get("http://{}/api/zone?status=1".format(config.smart))
-        print zones
-=======
         zones = requests.get("{}/api/zone?status=1".format(config.smart))
->>>>>>> master
         return zones.json()
 
     def getRoads(self, responsible): 
@@ -33,24 +28,15 @@ class SmartClient (object):
         return entities.json()
 
     def getDevicesOnZone(self, zone):
-<<<<<<< HEAD
-        print("http://{}/service/devices/zone/{}".format(config.smart, zone))
-        devicesList = requests.get("http://{}/service/devices/zone/{}".format(config.smart, zone))
-=======
         print("{}/service/devices/zone/{}".format(config.smart, zone))
         devicesList = requests.get("{}/service/devices/zone/{}".format(config.smart, zone))
->>>>>>> master
         #Get all devices  
         """body = {
             "id" : "Device_Smartphone_.*",
             "type" : "Device",
             "options" : "keyValues"
         }
-<<<<<<< HEAD
-        devicesList = requests.post("http://{}/service/query".format(config.smart),data=body)
-=======
         devicesList = requests.post("{}/service/query".format(config.smart),data=body)
->>>>>>> master
         """
         return devicesList.json()
 
