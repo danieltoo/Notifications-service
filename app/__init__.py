@@ -107,7 +107,7 @@ def alertsCountContextZone():
     data = []
     for zone in zones :
         alerts, headers = client.getHistoryAlerts(zone["idZone"])
-        print headers['Fiware-Total-Count']
+        print( headers['Fiware-Total-Count'])
         data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
     return json.dumps(data), 200    
 
