@@ -28,7 +28,7 @@ def firstLoadAlerts():
     zones  = client.getZones()
     temp_data = []
     for zone in zones :
-        #print(zone["idZone"])
+        print(zone["idZone"])
         alerts, headers = client.getHistoryAlerts(zone["idZone"])
         temp_data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
     global data
@@ -51,7 +51,7 @@ def alertsCountContextZone():
     zones  = client.getZones()
     temp_data = []
     for zone in zones :
-        #print(zone["idZone"])
+        print(zone["idZone"])
         alerts, headers = client.getHistoryAlerts(zone["idZone"])
         temp_data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
     global data
