@@ -13,6 +13,7 @@ from app.Functions import determinateZone
 from app.Notifications import Notifications
 from flask_cors import CORS
 from crate import client as crate
+from requests import get
 
 connection = crate.connect("http://35.196.174.137:4200")
 
@@ -111,24 +112,9 @@ def alertsCountContextZone():
         data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
     return json.dumps(data), 200    
 
-##########################################
-
-@app.route('/graph/category', methods=['GET'])
-def alertsCountContextZone():
-    zones  = client.getZones()
-    data = []
-    for zone in zones :
-        alerts, headers = client.getHistoryAlerts(zone["idZone"])
-        print( headers['Fiware-Total-Count'])
-        data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
-    return json.dumps(data), 200    
 
 
     
-
-
-
-
 
 
 
