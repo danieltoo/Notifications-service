@@ -131,7 +131,9 @@ def alertsCountSeverity():
     return json.dumps(jsonResult), 200
 
 
-
+if __name__ == '__main__':
+    #app.run(debug = False,host='0.0.0.0', port=8001)
+    socketio.run(app)
 
 
 
