@@ -21,19 +21,43 @@ noti = Notifications()
 app = Flask(__name__,static_url_path='/static')
 CORS(app)
 socketio = SocketIO(app)
-
 globalCode = crypt.crypt(config.username, config.password)
+data = []
+
+def firstLoadAlerts():
+    zones  = client.getZones()
+    temp_data = []
+    for zone in zones :
+        #print(zone["idZone"])
+        alerts, headers = client.getHistoryAlerts(zone["idZone"])
+        temp_data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
+    global data
+    data = temp_data
+    socketio.emit(globalCode, data, broadcast=True)
+
+#firstLoadAlerts()
 
 @socketio.on('registre')
 def test_registre(body, methods=['GET', 'POST']):
-    print("New Code" , body["code"])
     code = body["code"]
     if (body["username"] == config.username and body["password"] == config.password) :
         emit(code, globalCode)
+        socketio.emit(globalCode, data, broadcast=True)
     else :
         emit(code, False)
-    return 
 
+@socketio.on(globalCode)
+def alertsCountContextZone():
+    zones  = client.getZones()
+    temp_data = []
+    for zone in zones :
+        #print(zone["idZone"])
+        alerts, headers = client.getHistoryAlerts(zone["idZone"])
+        temp_data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
+    global data
+    data = temp_data
+    socketio.emit(globalCode, data, broadcast=True)
+    
 @app.route('/')
 def index():
     return render_template('./index.html') 
@@ -73,8 +97,12 @@ def notify():
 @app.route('/alerts/count/zone', methods=['GET'])
 def alertsCountZone():
     cursor = connection.cursor()
-    cursor.execute("select etbuilding.entity_id, etbuilding.owner , count(*)  as total from etalert, etbuilding where within(etalert.location, etbuilding.location) GROUP BY etbuilding.entity_id, etbuilding.owner")
-    result = cursor.fetchall()
+    #cursor.execute("select etbuilding.entity_id, etbuilding.owner , count(*)  as total from etalert, etbuilding where within(etalert.location, etbuilding.location) GROUP BY etbuilding.entity_id, etbuilding.owner")
+    #result = cursor.fetchall()
+    cursor.execute("select * from doc.etbuilding")
+    zones = cursor.fetchall()
+    for zone in zones:
+        print(zone[1])
     jsonResult = {}
     return json.dumps(result), 200
 
@@ -102,19 +130,14 @@ def alertsCountSeverity():
         jsonResult[item[1]] = item[0]
     return json.dumps(jsonResult), 200
 
-@app.route('/alerts/count/context/zone', methods=['GET'])
-def alertsCountContextZone():
-    zones  = client.getZones()
-    data = []
-    for zone in zones :
-        alerts, headers = client.getHistoryAlerts(zone["idZone"])
-        print( headers['Fiware-Total-Count'])
-        data.append([zone["idZone"], zone["name"] , int(headers['Fiware-Total-Count'])])
-    return json.dumps(data), 200    
 
 
 
-    
+
+
+
+
+
 
 
 
