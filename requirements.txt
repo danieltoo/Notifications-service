@@ -6,5 +6,5 @@ requests
 flask_socketio
 flask_cors
 crate
-gevent
+
 
