@@ -13,7 +13,6 @@ from app.Functions import determinateZone
 from app.Notifications import Notifications
 from flask_cors import CORS
 from crate import client as crate
-from requests import get
 
 connection = crate.connect("http://35.196.174.137:4200")
 
@@ -26,7 +25,8 @@ socketio = SocketIO(app)
 globalCode = crypt.crypt(config.username, config.password)
 
 @socketio.on('registre')
-def test_registre(body):
+def test_registre(body, methods=['GET', 'POST']):
+    print("New Code" , body["code"])
     code = body["code"]
     if (body["username"] == config.username and body["password"] == config.password) :
         emit(code, globalCode)
