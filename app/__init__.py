@@ -35,7 +35,7 @@ def index():
 def notify():  
     print ("Alerta Recibida")
     alert = request.json["data"][0]  # Extraer datos de la alerta
-    socketio.emit('alert:' + globalCode, alert, broadcast=True)  #Envía todas las alertas
+    #socketio.emit('alert:' + globalCode, alert, broadcast=True)  #Envía todas las alertas
     print(alert)
     zones  = client.getZones()
     inzone = determinateZone(alert["location"], zones) #Determinar el campus en el que se encuentra
