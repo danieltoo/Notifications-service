@@ -1,7 +1,7 @@
 # coding=utf-8
 import os
 from flask import Flask, render_template,jsonify,request,abort,redirect,g,url_for
-from flask_socketio import SocketIO, send, emit
+#from flask_socketio import SocketIO, send, emit
 from functools import wraps
 import crypt
 import random
@@ -14,11 +14,11 @@ from app.Notifications import Notifications
 client = SmartClient() 
 noti = Notifications()
 app = Flask(__name__,static_url_path='/static')
-socketio = SocketIO(app)
+#socketio = SocketIO(app)
 
 globalCode = crypt.crypt(config.username, config.password)
 
-@socketio.on('registre')
+"""@socketio.on('registre')
 def test_registre(body):
     code = body["code"]
     if (body["username"] == config.username and body["password"] == config.password) :
@@ -26,7 +26,7 @@ def test_registre(body):
     else :
         emit(code, False)
     return 
-
+"""
 @app.route('/')
 def index():
     return render_template('./index.html') 
