@@ -41,7 +41,7 @@ def notify():
     inzone = determinateZone(alert["location"], zones) #Determinar el campus en el que se encuentra
 
     if (inzone != {} ): 
-        socketio.emit('alert:' + inzone["idZone"], alert, broadcast=True) #Envía alertas de zona 
+        #socketio.emit('alert:' + inzone["idZone"], alert, broadcast=True) #Envía alertas de zona 
         allTokens = []
         devicesNear = []
         tokens = []
