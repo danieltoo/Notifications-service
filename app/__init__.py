@@ -11,14 +11,17 @@ from app.Client import SmartClient
 from app.Functions import determinateZone
 from app.Notifications import Notifications
 
+
 client = SmartClient() 
 noti = Notifications()
 app = Flask(__name__,static_url_path='/static')
+""" Uncomment this line is you need web sockets """
 #socketio = SocketIO(app)
-
 globalCode = crypt.crypt(config.username, config.password)
 
-"""@socketio.on('registre')
+""" If you need registre the web sockets clients uncomment the next function"""
+"""
+@socketio.on('registre')
 def test_registre(body):
     code = body["code"]
     if (body["username"] == config.username and body["password"] == config.password) :
@@ -29,14 +32,14 @@ def test_registre(body):
 """
 @app.route('/')
 def index():
+    """This function render the index html"""
     return render_template('./index.html') 
 
 @app.route('/notify', methods=['POST'])
 def notify():  
-    print ("Alerta Recibida")
+    """"This function receive the alert to send notifications"""
     alert = request.json["data"][0]  # Extraer datos de la alerta
     #socketio.emit('alert:' + globalCode, alert, broadcast=True)  #Envía todas las alertas
-    print(alert)
     zones  = client.getZones()
     inzone = determinateZone(alert["location"], zones) #Determinar el campus en el que se encuentra
 

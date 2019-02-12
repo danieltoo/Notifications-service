@@ -1,6 +1,7 @@
 import math
 
 def pointOnZone(x, y, polygon):
+    """ This function caculate if the point is inside the polygon"""
     i = 0
     j = len(polygon) - 1
     salida = False
@@ -12,6 +13,7 @@ def pointOnZone(x, y, polygon):
     return salida  
 
 def distance(start, end):
+    """ This function calculate the distance between two points"""
     rlat0 = math.radians(start[0])
     rlng0 = math.radians(start[1])
     rlat1 = math.radians(end[0])
@@ -27,6 +29,7 @@ def distance(start, end):
     return distance 
 
 def inSegment (start, end, point, width):
+    """ This function calculate if the point is in one segment of  the roadSegment"""
     area  = (distance(start, end) * width) / 2
     a = distance (start, point)
     b = distance (point, end)
@@ -41,6 +44,7 @@ def inSegment (start, end, point, width):
         return False
 
 def inRoadSegment (polyline, point, width) :
+    """ This function determine if the point is inthe segment """
     width = width / 2
     isOnRoad = False
     for i in range(len(polyline)):
@@ -50,6 +54,7 @@ def inRoadSegment (polyline, point, width) :
 
 
 def determinateZone (location, zones):
+    """ This function determinate the zone where the point is"""
     inzone = {}
     for zone in zones:  
         loc = location.split(',')

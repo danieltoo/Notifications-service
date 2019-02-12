@@ -2,32 +2,29 @@ import requests
 import json
 import config 
 
+""" This class work the device tokens and send the notifications"""
 class Notifications (object) : 
 
     def matchTokens (self, devicesList, tokenDevices):
+        """ This function match the device with its token"""
         tokens  = []
         for dev in devicesList :
             for token in tokenDevices:
-                #print(token)
-                #print(dev)
                 if(token["refDevice"] == dev["id"]):
                     tokens.append(token) 
         return tokens
 
     def clearTokens(self, alertSource, near, onZone, allTokens):
+        """ This function delete repeated devices tokens"""
         near = self.matchTokens(near, allTokens)
         onZone = self.matchTokens(onZone, allTokens)
 
         temp = {}
-        print("DEVICES ON ZONE")
         for devNear in near :
             temp[devNear ["refDevice"]] = devNear["fcmToken"]
-            #print(devNear["refDevice"])
 
-        print("DEVICES NEAR")
         for devZone in onZone : 
             temp[devZone ["refDevice"]] = devZone["fcmToken"]
-            #print(devZone["refDevice"])
 
         array = []
         devices = []
@@ -40,6 +37,9 @@ class Notifications (object) :
         return array, devices
 
     def sendNotifications(self, alert , tokens, devices):
+        """ This function Send the notifications """
+
+        # Add the color depending the severity
         color = ""
         if(alert["severity"] == "informational"):
             color = "#3498db"
@@ -52,7 +52,7 @@ class Notifications (object) :
         if(alert["severity"] == "critical"):
             color = "#c0392b"
 
-        print (alert["severity"])
+        # Make the notification
         body = {
             "notification": {
                 "title": alert["category"],
@@ -69,9 +69,10 @@ class Notifications (object) :
             "Content-Type":"application/json",
             "Authorization":'key=' + config.fcm
         }
-        #print(tokens)
+        
         index = 0 
         devices_notificated  = []
+        # Send the notification to each device 
         for token in tokens :
             body["to"] = token
             res = requests.post("http://fcm.googleapis.com/fcm/send",data=json.dumps(body),headers=headers)

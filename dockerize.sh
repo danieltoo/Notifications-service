@@ -1,3 +1,4 @@
+# This file was maked to compile the docker image faster
 echo "Deteniendo contenedores"
 docker stop $(docker ps -a -q)
 echo "Eliminado contenedores"
